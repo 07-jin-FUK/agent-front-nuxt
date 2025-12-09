@@ -2,17 +2,16 @@
   <aside class="sidebar" :class="{ 'is-open': isOpen }">
     <nav class="sidebar-nav">
       <div class="nav-section">
-        <p class="nav-label">メイン</p>
         <NuxtLink to="/mypage" class="nav-item">
-          <span class="nav-icon">📊</span>
+          
           ダッシュボード
         </NuxtLink>
         <NuxtLink to="/mypage/matching" class="nav-item">
-          <span class="nav-icon">🤝</span>
+          
           マッチング
         </NuxtLink>
         <NuxtLink to="/mypage/notifications" class="nav-item">
-          <span class="nav-icon">🔔</span>
+         
           通知
         </NuxtLink>
       </div>
@@ -20,19 +19,19 @@
       <div class="nav-section">
         <p class="nav-label">入札・交渉</p>
         <NuxtLink to="/mypage/offer" class="nav-item">
-          <span class="nav-icon">📝</span>
+         
           オファー画面
         </NuxtLink>
         <NuxtLink to="/mypage/offer/active" class="nav-item">
-          <span class="nav-icon">⏳</span>
+          
           参加中のオファー会
         </NuxtLink>
         <NuxtLink to="/mypage/cart" class="nav-item">
-          <span class="nav-icon">🛒</span>
+          
           カート
         </NuxtLink>
         <NuxtLink to="/mypage/negotiation" class="nav-item">
-          <span class="nav-icon">💬</span>
+        
           交渉
         </NuxtLink>
       </div>
@@ -40,15 +39,15 @@
       <div class="nav-section">
         <p class="nav-label">アカウント</p>
         <NuxtLink to="/mypage/corporate" class="nav-item">
-          <span class="nav-icon">🏢</span>
+          
           法人情報
         </NuxtLink>
         <NuxtLink to="/mypage/account" class="nav-item">
-          <span class="nav-icon">👤</span>
+         
           プロフィール編集
         </NuxtLink>
         <NuxtLink to="/mypage/account/children" class="nav-item">
-          <span class="nav-icon">👥</span>
+          
           子アカウント追加
         </NuxtLink>
       </div>
@@ -56,15 +55,15 @@
       <div class="nav-section">
         <p class="nav-label">その他</p>
         <NuxtLink to="/mypage/billing" class="nav-item">
-          <span class="nav-icon">💰</span>
+         
           請求
         </NuxtLink>
         <NuxtLink to="/mypage/contact" class="nav-item">
-          <span class="nav-icon">✉️</span>
+        
           問い合わせ
         </NuxtLink>
         <NuxtLink to="/mypage/withdraw" class="nav-item">
-          <span class="nav-icon">🚪</span>
+        
           退会
         </NuxtLink>
       </div>
@@ -102,7 +101,7 @@ defineProps<{
 }
 
 .sidebar-nav {
-  padding: 20px 0;
+  padding: 40px 0;
 }
 
 .nav-section {
@@ -122,23 +121,46 @@ defineProps<{
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 12px 20px;
+  padding: 15px 0 15px 65px;  // 上下15px、左65px
   font-size: 14px;
   color: #475569;
   text-decoration: none;
   transition: all 0.2s ease;
+  line-height: 1;
 
-  &:hover {
-    background: #f8fafc;
-    color: #1e3a5f;
+&:hover {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+&.router-link-active,
+&.router-link-exact-active {
+  position: relative;
+  color: #fff;
+  padding-left: 55px;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 20px;
+    width: 210px;  // 250px - 20px(左) - 20px(右)
+    height: 45px;
+    background: #000;
+    border-radius: 6px;
+    z-index: -1;
   }
 
-  &.router-link-active,
-  &.router-link-exact-active {
-    background: #eff6ff;
-    color: #3b82f6;
-    border-right: 3px solid #3b82f6;
+  &::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 45px;
+    border-radius: 4px;
+    background: #000;
   }
+}
 
   .nav-icon {
     font-size: 16px;

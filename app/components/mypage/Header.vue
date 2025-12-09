@@ -10,24 +10,19 @@
     </div>
 
     <div class="header-right">
-      <div class="notifications">
-        <NuxtLink to="/mypage/notifications" class="notification-btn">
-          <span class="icon">🔔</span>
-          <span v-if="notificationCount > 0" class="badge">{{ notificationCount }}</span>
-        </NuxtLink>
-      </div>
+<div class="notifications">
+  <button class="notification-btn">
+    <img src="/images/bell-icon.svg" alt="通知" class="icon-img">
+    <span v-if="notificationCount > 0" class="badge">{{ notificationCount }}</span>
+  </button>
+</div>
 
-      <div class="user-menu">
-        <button class="user-btn" @click="toggleUserMenu">
-          <span class="user-name">{{ userName }}</span>
-          <span class="arrow">▼</span>
-        </button>
-        
-        <div v-if="isUserMenuOpen" class="dropdown">
-          <NuxtLink to="/mypage/account" class="dropdown-item">アカウント設定</NuxtLink>
-          <button @click="handleLogout" class="dropdown-item">ログアウト</button>
-        </div>
-      </div>
+<div class="user-menu">
+  <div class="user-info">
+    <img src="/images/user-icon.png" alt="ユーザー" class="user-icon">
+    <span class="user-name">{{ userName }}</span>
+  </div>
+</div>
     </div>
   </header>
 </template>
@@ -35,8 +30,8 @@
 <script setup lang="ts">
 defineEmits(['toggle-sidebar'])
 
-const userName = ref('山田 太郎')
-const notificationCount = ref(3)
+const userName = ref('田中たろう')
+const notificationCount = ref(6)
 const isUserMenuOpen = ref(false)
 
 const toggleUserMenu = () => {
@@ -53,8 +48,8 @@ const handleLogout = () => {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 60px;
-  padding: 0 20px;
+  height: 70px;
+  padding: 0 60px;
   background: #fff;
   border-bottom: 1px solid #e2e8f0;
   position: fixed;
@@ -121,9 +116,8 @@ const handleLogout = () => {
 .header-right {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 15px;
 }
-
 .notifications {
   position: relative;
 }
@@ -136,20 +130,22 @@ const handleLogout = () => {
   height: 40px;
   background: none;
   border: none;
-  text-decoration: none;
+  cursor: pointer;
   position: relative;
 
-  .icon {
-    font-size: 20px;
+  .icon-img {
+    margin-top: 3px;
+    width: 24px;
+    height: 24px;
   }
+
 
   .badge {
     position: absolute;
-    top: 4px;
-    right: 4px;
+    top: 5px;
+    right: 3px;
     min-width: 18px;
     height: 18px;
-    padding: 0 5px;
     background: #e94560;
     color: #fff;
     font-size: 11px;
@@ -162,57 +158,28 @@ const handleLogout = () => {
 }
 
 .user-menu {
-  position: relative;
+  display: flex;
+  align-items: center;
 }
 
-.user-btn {
+.user-info {
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 8px 12px;
-  background: none;
-  border: 1px solid #e2e8f0;
-  border-radius: 6px;
-  cursor: pointer;
+
+  .user-icon {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+  }
 
   .user-name {
-    font-size: 14px;
-    color: #1e3a5f;
-  }
-
-  .arrow {
-    font-size: 10px;
-    color: #64748b;
-  }
-}
-
-.dropdown {
-  position: absolute;
-  top: 100%;
-  right: 0;
-  margin-top: 8px;
-  min-width: 160px;
-  background: #fff;
-  border: 1px solid #e2e8f0;
-  border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
-}
-
-.dropdown-item {
-  display: block;
-  width: 100%;
-  padding: 12px 16px;
-  font-size: 14px;
-  color: #1e3a5f;
-  text-decoration: none;
-  text-align: left;
-  background: none;
-  border: none;
-  cursor: pointer;
-
-  &:hover {
-    background: #f8fafc;
+color: var(--black-100, #1C1C1C);
+font-family: "Noto Sans JP";
+font-size: 14px;
+font-style: normal;
+font-weight: 400;
+line-height: 20px; /* 142.857% */
   }
 }
 </style>

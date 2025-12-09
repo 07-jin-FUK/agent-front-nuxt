@@ -96,9 +96,6 @@ const handleLogin = () => {
       font-size: 16px;
       cursor: pointer;
 
-      &:hover {
-        background: darken(#3498db, 10%);
-      }
     }
   }
 }

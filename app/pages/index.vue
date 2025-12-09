@@ -248,6 +248,4 @@ const handleSubmit = () => {
     }
   }
 }
-
-
 </style>

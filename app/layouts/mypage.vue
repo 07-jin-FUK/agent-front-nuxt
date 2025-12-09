@@ -30,11 +30,11 @@ const closeSidebar = () => {
 }
 
 .mypage-main {
-  padding: 80px 20px 40px;
+  padding: 110px 35px 40px;
 
   @media (min-width: 1024px) {
     margin-left: 250px;
-    padding: 80px 32px 40px;
+  padding: 110px 35px 40px;
   }
 }
 
