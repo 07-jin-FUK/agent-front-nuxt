@@ -358,8 +358,7 @@ const closeConfirmModal = () => {
 const executeSearchWithoutSaving = () => {
   closeConfirmModal()
   console.log('検索実行（保存なし）:', { filters, advancedFilters })
-  // TODO: 検索処理を実行
-  alert('検索を実行しました')
+  navigateTo('/mypage/matching/results')
 }
 
 const executeSearchWithSaving = () => {
@@ -369,8 +368,20 @@ const executeSearchWithSaving = () => {
     advanced: { ...advancedFilters }
   }
   console.log('条件を保存して検索:', conditionToSave)
-  // TODO: 保存処理と検索処理を実行
-  alert('条件を保存して検索を実行しました')
+  // TODO: 保存処理
+  navigateTo('/mypage/matching/results')
+}
+
+// 既存条件カードから検索する場合
+const handleSearch = (id: number) => {
+  // 直接result.vueへ遷移
+  navigateTo('/mypage/matching/results')
+}
+
+// 新規で検索条件を入力して検索する場合
+const handleMainSearch = () => {
+  // 確認モーダルを表示
+  isConfirmModalOpen.value = true
 }
 
 // 求職者条件カード
@@ -397,15 +408,6 @@ const conditions = ref([
     location: '東京都　港区 新宿区 渋谷区'
   }
 ])
-
-const handleSearch = (id: number) => {
-  navigateTo(`/mypage/matching/${id}`)
-}
-
-const handleMainSearch = () => {
-  isConfirmModalOpen.value = true
-}
-
 const handleSaveCondition = () => {
   const conditionToSave = {
     ...filters,
