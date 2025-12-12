@@ -6,13 +6,20 @@
           
           ダッシュボード
         </NuxtLink>
-        <NuxtLink to="/mypage/matching" class="nav-item">
-          
-          マッチング
-        </NuxtLink>
+<NuxtLink 
+  to="/mypage/matching" 
+  class="nav-item"
+  :class="{ 'router-link-active': $route.path.startsWith('/mypage/matching') }"
+>
+  求職者検索
+</NuxtLink>
         <NuxtLink to="/mypage/notifications" class="nav-item">
          
           通知
+        </NuxtLink>
+                <NuxtLink to="/mypage/billing" class="nav-item">
+         
+          請求管理
         </NuxtLink>
       </div>
 
@@ -54,10 +61,6 @@
 
       <div class="nav-section">
         <p class="nav-label">その他</p>
-        <NuxtLink to="/mypage/billing" class="nav-item">
-         
-          請求
-        </NuxtLink>
         <NuxtLink to="/mypage/contact" class="nav-item">
         
           問い合わせ

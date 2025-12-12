@@ -31,42 +31,20 @@
         </p>
       </div>
     </div>
-
+    
     <!-- マッチング条件 -->
     <section class="matching-section">
       <h2 class="section-title">マッチング条件</h2>
       <div class="matching-grid">
-        <div class="matching-card">
-          <h3 class="matching-title">求職者条件1</h3>
+        <div class="matching-card" v-for="(condition, index) in matchingConditions" :key="condition.id">
+          <h3 class="matching-title">{{ condition.title }}</h3>
           <div class="matching-details">
-            <p>年齢：20～40</p>
-            <p>経験職種：オープン・Web系：5年以上</p>
-            <p>希望勤務地：東京都　港区 新宿区 渋谷区</p>
+            <p>年齢：{{ condition.age }}</p>
+            <p>経験職種：{{ condition.jobType }}</p>
+            <p>希望勤務地：{{ condition.location }}</p>
           </div>
           <div class="button-wrap">
-            <button class="search-button">検索する</button>
-          </div>
-        </div>
-        <div class="matching-card">
-          <h3 class="matching-title">求職者条件1</h3>
-          <div class="matching-details">
-            <p>年齢：20～40</p>
-            <p>経験職種：オープン・Web系：5年以上</p>
-            <p>希望勤務地：東京都　港区 新宿区 渋谷区</p>
-          </div>
-          <div class="button-wrap">
-            <button class="search-button">検索する</button>
-          </div>
-        </div>
-        <div class="matching-card">
-          <h3 class="matching-title">求職者条件1</h3>
-          <div class="matching-details">
-            <p>年齢：20～40</p>
-            <p>経験職種：オープン・Web系：5年以上</p>
-            <p>希望勤務地：東京都　港区 新宿区 渋谷区</p>
-          </div>
-          <div class="button-wrap">
-            <button class="search-button">検索する</button>
+            <button class="search-button" @click="handleSearch(condition.id)">検索する</button>
           </div>
         </div>
       </div>
@@ -124,6 +102,36 @@
 definePageMeta({
   layout: "mypage",
 });
+
+// マッチング条件データ
+const matchingConditions = ref([
+  {
+    id: 1,
+    title: '求職者条件1',
+    age: '20～40',
+    jobType: 'オープン・Web系：5年以上',
+    location: '東京都　港区 新宿区 渋谷区'
+  },
+  {
+    id: 1,
+    title: '求職者条件1',
+    age: '20～40',
+    jobType: 'オープン・Web系：5年以上',
+    location: '東京都　港区 新宿区 渋谷区'
+  },
+  {
+    id: 1,
+    title: '求職者条件1',
+    age: '20～40',
+    jobType: 'オープン・Web系：5年以上',
+    location: '東京都　港区 新宿区 渋谷区'
+  }
+])
+
+// 検索ボタンクリック時の処理
+const handleSearch = (id: number) => {
+  navigateTo(`/mypage/matching/${id}`)
+}
 </script>
 
 <style lang="scss" scoped>
@@ -148,15 +156,15 @@ definePageMeta({
   box-shadow: 6px 6px 54px 0 rgba(0, 0, 0, 0.05);
   padding: 20px;
   text-align: center;
-  height: 100px; // ← この行を追加
-  display: flex; // ← この行を追加
-  flex-direction: column; // ← この行を追加
-  justify-content: center; // ← この行を追加（縦中央揃え）
+  height: 100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   box-sizing: border-box;
 
   .stat-label {
     color: #000;
-    font-family: "Noto Sans JP";
+    font-family: "noto-sans-cjk-jp", sans-serif;
     font-size: 14px;
     font-style: normal;
     font-weight: 500;
@@ -169,7 +177,7 @@ definePageMeta({
 
   .stat-value {
     color: #000;
-    font-family: "Noto Sans JP";
+    font-family: "noto-sans-cjk-jp", sans-serif;
     font-size: 36px;
     font-style: normal;
     font-weight: 700;
@@ -180,7 +188,7 @@ definePageMeta({
 
     .stat-unit {
       color: #000;
-      font-family: "Noto Sans JP";
+      font-family: "noto-sans-cjk-jp", sans-serif;
       font-size: 16px;
       font-style: normal;
       font-weight: 700;
@@ -195,7 +203,7 @@ definePageMeta({
 // セクションタイトル
 .section-title {
   font-size: 18px;
-  font-weight: 600;
+  font-weight: 700;
   color: #1e293b;
   margin-bottom: 20px;
 }
@@ -221,7 +229,7 @@ definePageMeta({
     background: #2d2d2d;
     color: #fff;
     font-size: 14px;
-    font-weight: 600;
+    font-weight: 700;
     padding: 10px 15px;
     line-height: 1;
     border-radius: 10px 10px 0 0;
@@ -232,13 +240,17 @@ definePageMeta({
 
     p {
       color: #000;
-      font-family: "Noto Sans JP";
+      font-family: "noto-sans-cjk-jp", sans-serif;
       font-size: 14px;
       font-style: normal;
       font-weight: 400;
       line-height: 14px; /* 100% */
       letter-spacing: 0.5px;
       margin-bottom: 10px;
+      
+          overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
     }
   }
 
@@ -255,7 +267,7 @@ definePageMeta({
       background: #f3f3f3;
       border-radius: 4px;
       color: #202224;
-      font-family: "Noto Sans JP";
+      font-family: "noto-sans-cjk-jp", sans-serif;
       font-size: 14px;
       font-style: normal;
       font-weight: 400;
@@ -278,7 +290,7 @@ definePageMeta({
   padding: 0;
   display: flex;
   flex-direction: column;
-    width: 1050px;
+  width: 1050px;
   gap: 5px;
 }
 
@@ -309,7 +321,7 @@ definePageMeta({
   .info-left {
     .info-date {
       color: #000;
-      font-family: "Noto Sans JP";
+      font-family: "noto-sans-cjk-jp", sans-serif;
       font-size: 14px;
       font-style: normal;
       font-weight: 300;
@@ -320,7 +332,7 @@ definePageMeta({
 
     .info-text {
       color: #000;
-      font-family: "Noto Sans JP";
+      font-family: "noto-sans-cjk-jp", sans-serif;
       font-size: 14px;
       font-style: normal;
       font-weight: 300;
@@ -333,7 +345,7 @@ definePageMeta({
 .read-more {
   text-align: right;
   margin-top: 30px;
-    width: 1050px;
+  width: 1050px;
 
   .read-more-link {
     background: #fff;
@@ -345,8 +357,8 @@ definePageMeta({
     font-weight: 400;
     line-height: 18px; /* 128.571% */
     letter-spacing: 0.16px;
-        display: inline-flex; // ← 追加
-    align-items: center; // ← 追加
+    display: inline-flex;
+    align-items: center;
     gap: 8px;
   }
 }
