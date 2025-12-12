@@ -35,18 +35,14 @@
           <span class="age-unit">歳</span>
         </div>
       </div>
+
 <div class="filter-actions">
   <button class="add-condition-btn" @click="toggleAdvanced">
     {{ isAdvancedOpen ? '－' : '＋' }} さらに詳しい条件を追加
   </button>
-  <div class="filter-actions-right">
-    <button class="save-condition-btn" @click="handleSaveCondition">
-      条件を保存する
-    </button>
-    <button class="search-main-btn" @click="handleMainSearch">
-      検索
-    </button>
-  </div>
+  <button class="search-main-btn" @click="handleMainSearch">
+    検索する
+  </button>
 </div>
 
       <!-- 詳細条件セクション（アコーディオン） -->
@@ -159,12 +155,15 @@
           </div>
         </div>
         
-          <!-- 詳細条件の下部アクション -->
-  <div class="advanced-actions">
-    <button class="save-condition-btn" @click="handleSaveCondition">
-      条件を保存する
-    </button>
-  </div>
+        <!-- 詳細条件の下部アクション -->
+        <div class="advanced-actions">
+          <button class="search-main-btn" @click="handleMainSearch">
+            検索する
+          </button>
+          <!-- <button class="save-condition-btn" @click="handleSaveCondition">
+            条件を保存する
+          </button> -->
+        </div>
 
       </div>
     </section>
@@ -173,9 +172,25 @@
     <section class="candidates-section">
       <div class="candidates-grid">
         <div v-for="condition in conditions" :key="condition.id" class="condition-card">
-          <div class="card-header">
-            <h3 class="card-title">{{ condition.title }}</h3>
-          </div>
+<div class="card-header">
+  <div v-if="editingId === condition.id" class="title-edit-wrapper">
+    <input 
+      v-model="editingTitle"
+      @blur="saveTitle(condition.id)"
+      @keyup.enter="saveTitle(condition.id)"
+      @keyup.esc="cancelEdit"
+      class="card-title-input"
+      autofocus
+    />
+  </div>
+  <div v-else class="title-display-wrapper" @click="startEdit(condition.id, condition.title)">
+    <h3 class="card-title">{{ condition.title }}</h3>
+    <svg class="edit-icon" width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M10.5 1.5L12.5 3.5L4.5 11.5H2.5V9.5L10.5 1.5Z" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M8.5 3.5L10.5 5.5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </div>
+</div>
           <div class="card-body">
             <p class="condition-text">年齢：{{ condition.age }}</p>
             <p class="condition-text">経験職種：{{ condition.jobType }}</p>
@@ -201,6 +216,27 @@
         <div class="modal-footer">
           <button class="btn-cancel" @click="closeModal">キャンセル</button>
           <button class="btn-save" @click="closeModal">保存</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 検索条件保存確認モーダル -->
+    <div v-if="isConfirmModalOpen" class="modal-overlay" @click.self="closeConfirmModal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 class="modal-title">検索条件の保存</h3>
+          <button class="modal-close" @click="closeConfirmModal">✕</button>
+        </div>
+        <div class="modal-body">
+          <p class="confirm-text">今回の検索条件を保存しますか？</p>
+        </div>
+        <div class="modal-footer">
+          <button class="btn-cancel" @click="executeSearchWithoutSaving">
+            保存せずに検索
+          </button>
+          <button class="btn-save" @click="executeSearchWithSaving">
+            保存して検索
+          </button>
         </div>
       </div>
     </div>
@@ -312,6 +348,31 @@ const getModalTitle = () => {
   return titles[currentModalType.value] || ''
 }
 
+// 検索条件保存確認モーダル
+const isConfirmModalOpen = ref(false)
+
+const closeConfirmModal = () => {
+  isConfirmModalOpen.value = false
+}
+
+const executeSearchWithoutSaving = () => {
+  closeConfirmModal()
+  console.log('検索実行（保存なし）:', { filters, advancedFilters })
+  // TODO: 検索処理を実行
+  alert('検索を実行しました')
+}
+
+const executeSearchWithSaving = () => {
+  closeConfirmModal()
+  const conditionToSave = {
+    ...filters,
+    advanced: { ...advancedFilters }
+  }
+  console.log('条件を保存して検索:', conditionToSave)
+  // TODO: 保存処理と検索処理を実行
+  alert('条件を保存して検索を実行しました')
+}
+
 // 求職者条件カード
 const conditions = ref([
   {
@@ -342,7 +403,7 @@ const handleSearch = (id: number) => {
 }
 
 const handleMainSearch = () => {
-  console.log('検索実行:', { filters, advancedFilters })
+  isConfirmModalOpen.value = true
 }
 
 const handleSaveCondition = () => {
@@ -353,6 +414,29 @@ const handleSaveCondition = () => {
   console.log('条件を保存:', conditionToSave)
   // TODO: API連携時にここで保存処理
   alert('条件を保存しました（※現在はダミー動作です）')
+}
+
+// タイトル編集用
+const editingId = ref<number | null>(null)
+const editingTitle = ref('')
+
+const startEdit = (id: number, currentTitle: string) => {
+  editingId.value = id
+  editingTitle.value = currentTitle
+}
+
+const saveTitle = (id: number) => {
+  const condition = conditions.value.find(c => c.id === id)
+  if (condition && editingTitle.value.trim()) {
+    condition.title = editingTitle.value.trim()
+  }
+  editingId.value = null
+  editingTitle.value = ''
+}
+
+const cancelEdit = () => {
+  editingId.value = null
+  editingTitle.value = ''
 }
 </script>
 
@@ -453,12 +537,15 @@ const handleSaveCondition = () => {
 .filter-actions {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   margin-top: 20px;
   padding-top: 20px;
+  position: relative;
 }
 
 .add-condition-btn {
+  position: absolute;
+  left: 0;
   background: none;
   border: 1px solid #D9D9D9;
   padding: 10px 20px;
@@ -490,7 +577,6 @@ const handleSaveCondition = () => {
     background: #1a1a1a;
   }
 }
-
 // 詳細条件セクション
 .advanced-section {
   margin-top: 30px;
@@ -618,6 +704,7 @@ const handleSaveCondition = () => {
     width: 18px;
     height: 18px;
     cursor: pointer;
+    accent-color: #2D2D2D;
   }
 
   &.not-specified {
@@ -636,6 +723,14 @@ const handleSaveCondition = () => {
   background: #FFF;
   border-radius: 6px;
   text-align: center;
+}
+
+.confirm-text {
+  font-family: "noto-sans-cjk-jp", sans-serif;
+  font-size: 16px;
+  color: #333;
+  text-align: center;
+  margin: 20px 0;
 }
 
 // 求職者条件カード
@@ -665,16 +760,61 @@ const handleSaveCondition = () => {
 }
 
 .card-header {
-  background: #2D2D2D;
+  background: #000;
   padding: 15px 20px;
+}
 
-  .card-title {
-    color: #FFF;
-    font-family: "noto-sans-cjk-jp", sans-serif;
-    font-size: 14px;
-    font-weight: 700;
-    line-height: 1;
-    margin: 0;
+.title-display-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  
+  &:hover {
+    .card-title {
+      opacity: 0.9;
+    }
+    
+    .edit-icon {
+      opacity: 1;
+    }
+  }
+}
+
+.title-edit-wrapper {
+  width: 100%;
+}
+
+.card-title {
+  color: #FFF;
+  font-family: "noto-sans-cjk-jp", sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1;
+  margin: 0;
+  transition: opacity 0.2s ease;
+}
+
+.edit-icon {
+  flex-shrink: 0;
+  opacity: 0.6;
+  transition: opacity 0.2s ease;
+}
+
+.card-title-input {
+  width: 100%;
+  padding: 4px 8px;
+  background: #FFF;
+  color: #000;
+  font-family: "noto-sans-cjk-jp", sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  border: none;
+  border-radius: 4px;
+  outline: none;
+  
+  &:focus {
+    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.5);
   }
 }
 
@@ -706,7 +846,7 @@ const handleSaveCondition = () => {
   max-width: 120px;
   padding: 8px 20px;
   background: #F3F3F3;
-  color: #202224;
+  color: #000;
   font-family: "noto-sans-cjk-jp", sans-serif;
   font-size: 14px;
   font-weight: 400;
@@ -815,7 +955,7 @@ const handleSaveCondition = () => {
 }
 
 .btn-save {
-  background: #2D2D2D;
+  background: #000;
   color: #FFF;
   border: none;
 
@@ -824,24 +964,11 @@ const handleSaveCondition = () => {
   }
 }
 
-.filter-actions {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-top: 20px;
-  padding-top: 20px;
-}
-
-.filter-actions-right {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
 
 .save-condition-btn {
   padding: 10px 20px;
   background: #FFF;
-  color: #2D2D2D;
+  color: #000;
   font-family: "noto-sans-cjk-jp", sans-serif;
   font-size: 14px;
   font-weight: 500;
@@ -859,8 +986,10 @@ const handleSaveCondition = () => {
 .advanced-actions {
   display: flex;
   justify-content: center;
+  gap: 12px;
   margin-top: 30px;
   padding-top: 20px;
   border-top: 1px solid #E5E5E5;
 }
+
 </style>
