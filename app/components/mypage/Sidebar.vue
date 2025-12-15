@@ -13,22 +13,21 @@
 >
   求職者検索
 </NuxtLink>
-        <NuxtLink to="/mypage/notifications" class="nav-item">
-         
-          通知
+                <NuxtLink to="/mypage/offer" class="nav-item">
+          オファー状況
         </NuxtLink>
                 <NuxtLink to="/mypage/billing" class="nav-item">
-         
           請求管理
         </NuxtLink>
       </div>
 
       <div class="nav-section">
-        <p class="nav-label">入札・交渉</p>
-        <NuxtLink to="/mypage/offer" class="nav-item">
-         
-          オファー画面
+        <p class="nav-label">検討中（開発）</p>
+        
+                <NuxtLink to="/mypage/notifications" class="nav-item">
+          通知
         </NuxtLink>
+
         <NuxtLink to="/mypage/offer/active" class="nav-item">
           
           参加中のオファー会
@@ -146,7 +145,7 @@ defineProps<{
     position: absolute;
     top: 0;
     left: 20px;
-    width: 210px;  // 250px - 20px(左) - 20px(右)
+    width: 225px;  // 250px - 20px(左) - 20px(右)
     height: 45px;
     background: #000;
     border-radius: 6px;
