@@ -13,6 +13,7 @@
 
 <script setup lang="ts">
 const isSidebarOpen = ref(false)
+const route = useRoute()
 
 const toggleSidebar = () => {
   isSidebarOpen.value = !isSidebarOpen.value
@@ -21,20 +22,54 @@ const toggleSidebar = () => {
 const closeSidebar = () => {
   isSidebarOpen.value = false
 }
+
+
+// ルート変更時にサイドバーを閉じる
+watch(() => route.path, () => {
+  closeSidebar()
+})
+
+
 </script>
+
+<style lang="scss">
+// scopedを外してグローバルに適用
+@media (max-width: 480px) {
+  html, body {
+    overflow-x: hidden;
+    width: 100%;
+    max-width: 100vw; // ← 追加
+    position: relative;
+  }
+}
+</style>
 
 <style lang="scss" scoped>
 .mypage-layout {
   min-height: 100vh;
   background: #f8fafc;
+  
+  @media (max-width: 480px) {
+    overflow-x: hidden; // ← 追加
+    width: 100%; // ← 追加
+    max-width: 100vw; // ← 追加
+  }
 }
 
 .mypage-main {
   padding: 110px 35px 40px;
 
-  @media (min-width: 1024px) {
+  @media (min-width: 836px) {
     margin-left: 250px;
-  padding: 110px 35px 40px;
+    padding: 110px 35px 40px;
+  }
+  
+  @media (max-width: 480px) {
+    padding: 80px 7.5% 40px;
+    overflow-x: hidden; // ← 追加
+    width: 100%; // ← 追加
+    max-width: 100vw; // ← 追加
+    box-sizing: border-box; // ← 追加
   }
 }
 
@@ -52,7 +87,7 @@ const closeSidebar = () => {
     visibility: visible;
   }
 
-  @media (min-width: 1024px) {
+  @media (min-width: 836px) {
     display: none;
   }
 }

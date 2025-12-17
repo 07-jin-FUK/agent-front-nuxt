@@ -89,16 +89,31 @@ defineProps<{
   background: #fff;
   border-right: 1px solid #e2e8f0;
   overflow-y: auto;
-  transform: translateX(-100%);
   transition: transform 0.3s ease;
   z-index: 90;
 
-  @media (min-width: 1024px) {
+  @media (min-width: 836px) {
     transform: translateX(0);
   }
 
-  &.is-open {
+  @media (max-width: 835px) and (min-width: 481px) {
+    // タブレットサイズ（481px〜835px）
     transform: translateX(0);
+  }
+
+  @media (max-width: 480px) {
+    // スマホサイズ（480px以下）
+    left: auto;
+    top:40px;
+    right: 0;
+    border-right: none;
+    border-left: 1px solid #e2e8f0;
+    transform: translateX(100%);
+    width: 200px;
+    
+    &.is-open {
+      transform: translateX(0);
+    }
   }
 }
 
@@ -123,46 +138,46 @@ defineProps<{
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 15px 0 15px 65px;  // 上下15px、左65px
+  padding: 15px 0 15px 65px;
   font-size: 14px;
   color: #475569;
   text-decoration: none;
   transition: all 0.2s ease;
   line-height: 1;
 
-&:hover {
-  background: rgba(0, 0, 0, 0.05);
-}
-
-&.router-link-active,
-&.router-link-exact-active {
-  position: relative;
-  color: #fff;
-  padding-left: 55px;
-
-  &::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 20px;
-    width: 225px;  // 250px - 20px(左) - 20px(右)
-    height: 45px;
-    background: #000;
-    border-radius: 6px;
-    z-index: -1;
+  &:hover {
+    background: rgba(0, 0, 0, 0.05);
   }
 
-  &::after {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 4px;
-    height: 45px;
-    border-radius: 4px;
-    background: #000;
+  &.router-link-active,
+  &.router-link-exact-active {
+    position: relative;
+    color: #fff;
+    padding-left: 55px;
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 20px;
+      right: 3px; // 固定値ではなく、rightで指定
+      height: 45px;
+      background: #000;
+      border-radius: 6px;
+      z-index: -1;
+    }
+
+    &::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 45px;
+      border-radius: 4px;
+      background: #000;
+    }
   }
-}
 
   .nav-icon {
     font-size: 16px;
