@@ -565,6 +565,7 @@ const isAllNotSpecified = () => {
   border-radius: 5px;
   background: #fff;
   margin-bottom: 50px;
+  width: 1060px;
 }
 
 .filter-row {
@@ -923,10 +924,7 @@ margin-bottom: 20px;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 20px;
-
-  @media (max-width: 1200px) {
-    grid-template-columns: repeat(2, 1fr);
-  }
+  width:1060px;
 
   @media (max-width: 768px) {
     grid-template-columns: 1fr;
@@ -937,7 +935,7 @@ margin-bottom: 20px;
   background: #fff;
   border-radius: 10px 10px 0 0;
   overflow: hidden;
-    min-width:340px;
+  width:340px;
 }
 
 .card-header {
