@@ -332,8 +332,7 @@ const changePage = (page: number) => {
 
 <style lang="scss" scoped>
 .results-page {
-  max-width: 1200px;
-  margin: 0 auto;
+  width: 1060px;
 }
 
 // ページヘッダー
@@ -426,6 +425,7 @@ const changePage = (page: number) => {
 
   .count {
     font-size: 24px;
+    margin-right: 3px;
     font-weight: 700;
     color: #2d2d2d;
   }
@@ -1027,6 +1027,7 @@ const changePage = (page: number) => {
     font-size: 18px;
     font-weight: 700;
     color: #2d2d2d;
+    margin-right: 3px;
   }
 
   .count {
