@@ -48,24 +48,28 @@
 
             <!-- オファー価格 -->
             <div class="offer-price-section">
-              <p class="price-label">参加中のオファー価格</p>
+              <p class="price-label">御社のオファー価格</p>
               <p class="price-value">
                 {{ offer.offerPrice }}
                 <span class="price-unit">万円</span>
               </p>
             </div>
 
-            <!-- 年収情報とアクション -->
-            <div class="bottom-actions">
-              <div class="salary-label-btn current-label">現在の年収</div>
-              <div class="salary-value-btn current-value">
-                {{ offer.currentSalaryMin }} - {{ offer.currentSalaryMax }}
-                <span class="quo">万円</span>
+            <!-- 年収情報 -->
+            <div class="salary-section">
+              <div class="salary-box">
+                <div class="salary-label">現在の年収</div>
+                <div class="salary-value">
+                  {{ offer.currentSalaryMin }} - {{ offer.currentSalaryMax }}
+                  <span class="salary-unit">万円</span>
+                </div>
               </div>
-              <div class="salary-label-btn desired-label">希望年収</div>
-              <div class="salary-value-btn desired-value">
-                {{ offer.desiredSalary }}
-                <span class="quo">万円以上</span>
+              <div class="salary-box">
+                <div class="salary-label">希望年収</div>
+                <div class="salary-value">
+                  {{ offer.desiredSalary }}
+                  <span class="salary-unit">万円以上</span>
+                </div>
               </div>
             </div>
           </div>
@@ -76,7 +80,7 @@
               <button class="action-btn detail" @click="viewJobInfo(offer.id)">求人情報</button>
               <button class="action-btn change-price" @click="changeOfferPrice(offer.id)">オファー価格変更</button>
             </div>
-            
+
             <!-- タイマー表示 -->
             <div class="timer-badge">
               <span class="timer-icon">⏱</span>
@@ -159,7 +163,6 @@ const changeOfferPrice = (offerId: number) => {
 </script>
 
 <style lang="scss" scoped>
-
 // ページヘッダー
 .page-header {
   margin-bottom: 24px;
@@ -198,7 +201,7 @@ const changeOfferPrice = (offerId: number) => {
 .offer-left {
   width: 160px;
   background: #fff;
-  border-right: 1px solid #9D9D9D;
+  border-right: 1px solid #9d9d9d;
   padding: 20px;
   display: flex;
   flex-direction: column;
@@ -253,13 +256,13 @@ const changeOfferPrice = (offerId: number) => {
 .user-status {
   font-size: 12px;
   color: #000;
-      font-family: "noto-sans-cjk-jp", sans-serif;
-font-style: normal;
-font-weight: 400;
-line-height: 12px;
-letter-spacing: 0.3px;
+  font-family: "noto-sans-cjk-jp", sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 12px;
+  letter-spacing: 0.3px;
   margin-top: 15px;
-    width: 100%; 
+  width: 100%;
   text-align: left;
 
   .status-label {
@@ -299,19 +302,20 @@ letter-spacing: 0.3px;
 
 // 職種情報
 .job-info {
-padding-left: 20px;
+  padding-left: 20px;
+  margin-bottom: 20px;
 
   .job-category {
-color: #000;
-text-align: left;
+    color: #000;
+    text-align: left;
     font-family: "noto-sans-cjk-jp", sans-serif;
 
-font-size: 14px;
-font-style: normal;
-font-weight: 700;
-line-height: 14px; /* 100% */
-letter-spacing: 0.3px;
-margin-bottom: 10px;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 14px; /* 100% */
+    letter-spacing: 0.3px;
+    margin-bottom: 10px;
   }
 
   .job-title {
@@ -327,11 +331,12 @@ margin-bottom: 10px;
 
 // オファー価格
 .offer-price-section {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
   text-align: left;
-background: #F5F5F5;
+  background: #f5f5f5;
   padding: 25px 20px;
+  margin-bottom: 10px;
 
   .price-label {
     color: #000;
@@ -353,77 +358,67 @@ background: #F5F5F5;
     margin: 0;
 
     .price-unit {
-color: #000;
-font-size: 20px;
-font-style: normal;
-font-weight: 700;
-line-height: 30px;
-letter-spacing: 0.3px;
-    font-family: "noto-sans-cjk-jp", sans-serif;
+      color: #000;
+      font-size: 20px;
+      font-style: normal;
+      font-weight: 700;
+      line-height: 30px;
+      letter-spacing: 0.3px;
+      font-family: "noto-sans-cjk-jp", sans-serif;
     }
   }
 }
 
-// 年収とアクション
-.bottom-actions {
+.salary-section {
   display: flex;
-  margin-top: auto;
-  padding-top: 16px;
-  align-items: center;
-  
+  gap: 10px;
 }
 
-.salary-label-btn {
-  padding: 10px 20px;
+.salary-box {
+  flex: 1;
+  border: 1px solid #000;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+
+.salary-label {
   font-family: "noto-sans-cjk-jp", sans-serif;
-  font-size: 14px;
-  font-weight: 400;
-  line-height: 14px;
-  letter-spacing: 0.5px;
+color: #000;
+font-size: 14px;
+font-style: normal;
+font-weight: 400;
+line-height: 14px; /* 100% */
+letter-spacing: 0.5px;
   white-space: nowrap;
-  display: flex;
-  align-items: center;
-  
-  
-  &.current-label,
-  &.desired-label {
-    background: #292929;
-    color: #fff;
-  }
 }
 
-.salary-value-btn {
-  padding: 7px 20px;
-  font-family: "noto-sans-cjk-jp", sans-serif;
+.salary-value {
   color: #000;
-  white-space: nowrap;
-  display: flex;
-  align-items: baseline;
-  margin-right: 20px;
-  background: #f5f5f5;
+  font-family: "noto-sans-cjk-jp", sans-serif;
   font-size: 20px;
   font-weight: 700;
   line-height: 20px;
   letter-spacing: 0.3px;
-
-  .quo {
-    color: #000;
+  background: #F5F5F5;
+  padding: 7px 20px;
+  flex: 1;
+  white-space: nowrap;
+  
+  .salary-unit {
     font-size: 14px;
     font-weight: 400;
-    line-height: 14px;
-    letter-spacing: 0.3px;
-    margin-left: 5px;
+    margin-left: 4px;
   }
 }
 
 // 中央
 .offer-center {
-  flex: 1;
+  width:580px;
   padding: 20px 30px;
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  border-right: 1px solid #9D9D9D;
+  border-right: 1px solid #9d9d9d;
 }
 
 // 右側
