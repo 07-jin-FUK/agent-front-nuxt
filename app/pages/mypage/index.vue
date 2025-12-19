@@ -1,5 +1,5 @@
 <template>
-  <div class="dashboard">
+  <div class="dashboard all-page">
     <!-- 統計カード -->
 <div class="stats-container">
   <div class="stats-grid">

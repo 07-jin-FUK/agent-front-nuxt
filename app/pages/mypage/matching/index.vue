@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="all-page">
     <h1 class="page-title">求職者検索</h1>
 
     <!-- フィルターセクション -->
@@ -548,6 +548,7 @@ const isAllNotSpecified = () => {
 </script>
 
 <style lang="scss" scoped>
+    
 .page-title {
   color: #202224;
   font-family: "noto-sans-cjk-jp", sans-serif;

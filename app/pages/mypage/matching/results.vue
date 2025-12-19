@@ -1,5 +1,5 @@
 <template>
-  <div class="results-page">
+  <div class="results-page all-page">
     <!-- ページヘッダー -->
     <div class="page-header">
       <div class="header-left">
@@ -332,7 +332,8 @@ const changePage = (page: number) => {
 
 <style lang="scss" scoped>
 .results-page {
-  width: 1060px;
+  width: 1160px;
+  padding-right: 100px;
 }
 
 // ページヘッダー

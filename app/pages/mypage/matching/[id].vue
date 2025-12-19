@@ -1,5 +1,5 @@
 <template>
-  <div class="detail-page">
+  <div class="detail-page all-page">
     <!-- 黒帯ヘッダー（グレー背景の上に配置） -->
     <div class="black-header">
       <h1 class="page-title">{{ conditionData.title }}</h1>
